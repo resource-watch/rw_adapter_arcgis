@@ -1,0 +1,6 @@
+test:
+  adapter: postgresql
+  database: arcgis_adapter_test
+  username: postgres
+  password:
+  port: 5433
