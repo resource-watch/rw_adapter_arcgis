@@ -10,9 +10,9 @@ module Filters
                   end
 
       filter = if select_params.present?
-                 "SELECT #{to_select}"
+                 "outFields=#{to_select}"
                else
-                 "SELECT"
+                 "outFields=*"
                end
       filter
     end

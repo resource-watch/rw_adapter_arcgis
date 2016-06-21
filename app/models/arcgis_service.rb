@@ -11,13 +11,12 @@ class ArcgisService
   end
 
   def connect_data
-    # query_to_run = if @options_hash.present?
-    #                  "/query?#{options_query}&f=json"
-    #                else
-    #                  "/query?#{index_query}&f=json"
-    #                end
-
-    query_to_run = "/query?#{index_query}&f=json"
+    standard_params = '&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&f=json'
+    query_to_run    = if @options_hash.present?
+                        "/query?#{options_query}#{standard_params}"
+                      else
+                        "/query?#{index_query}#{standard_params}"
+                      end
 
     url =  URI.encode(@connect_data_url[/[^\?]+/])
     url += query_to_run
@@ -38,14 +37,14 @@ class ArcgisService
     end
 
     def index_query
-      "where=1=1&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*"
+      'outFields=*&where=1=1'
     end
 
     def options_query
       # SELECT
       filter = Filters::Select.apply_select(@select, @aggr_func, @aggr_by)
       # WHERE
-      filter += ' WHERE ' if @not_filter.present? || @filter.present?
+      filter += '&where=1=1' unless @filter.present?
       filter += Filters::FilterWhere.apply_where(@filter, nil) if @filter.present?
       # WHERE NOT
       filter += ' AND' if @not_filter.present? && @filter.present?
