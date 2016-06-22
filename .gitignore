@@ -13,6 +13,9 @@
 !/log/.keep
 !/tmp/.keep
 !/tmp/pids/.keep
+tmp/pids/puma.pid
+tmp/pids/puma.state
+tmp/pids/sidekiq.pid
 
 # Ignore Byebug command history file.
 .byebug_history
