@@ -18,7 +18,7 @@ class ArcgisService
                         "/query?#{index_query}#{standard_params}"
                       end
 
-    url =  URI.encode(@connect_data_url[/[^\?]+/])
+    url =  URI.encode(@connect_data_url[/[^\?]+/].gsub('/query',''))
     url += query_to_run
 
     @c = Curl::Easy.http_get(URI.escape(url)) do |curl|

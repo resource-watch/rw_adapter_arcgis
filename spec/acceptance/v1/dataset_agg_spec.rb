@@ -16,6 +16,16 @@ module V1
                           "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json"
                         }}}
 
+      let!(:params_q)   {{"dataset": {
+                          "id": "#{dataset_id}",
+                          "provider": "Arcgis",
+                          "format": "JSON",
+                          "name": "Arcgis test api",
+                          "data_path": "features",
+                          "attributes_path": "fields",
+                          "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?outFields=District,City&where=1=1&f=json"
+                        }}}
+
       context 'Aggregation with params' do
         it 'Allows aggregate Arcgis data by one attribute' do
           post "/query/#{dataset_id}?select[]=District&filter=(Score<<100 <and> Score>=1)&filter_not=(FID==56)&aggr_by[]=Free_Lunch&aggr_func=sum&order[]=District", params: params
@@ -29,7 +39,7 @@ module V1
         end
 
         it 'Allows aggregate Arcgis data by two attributes with order DESC' do
-          post "/query/#{dataset_id}?select[]=District,City&aggr_by[]=Free_Lunch,Reduced_Lu&aggr_func[]=sum,avg&order[]=-City", params: params
+          post "/query/#{dataset_id}?select[]=District,City&aggr_by[]=Free_Lunch,Reduced_Lu&aggr_func[]=sum,avg&order[]=-City", params: params_q
 
           data = json['data']
 
