@@ -26,6 +26,8 @@ class ArcgisService
       curl.headers['Content-Type'] = 'application/json'
     end
 
+    @c.perform
+
     Oj.load(@c.body_str.force_encoding(Encoding::UTF_8))[@connect_data_path] || Oj.load(@c.body_str.force_encoding(Encoding::UTF_8))
   end
 
@@ -44,10 +46,11 @@ class ArcgisService
       # SELECT
       filter = Filters::Select.apply_select(@select, @aggr_func, @aggr_by)
       # WHERE
-      filter += '&where=1=1' unless @filter.present?
+      filter += '&where=1=1'                                   unless @filter.present?
+      filter += '&where='                                      if @not_filter.present? || @filter.present?
       filter += Filters::FilterWhere.apply_where(@filter, nil) if @filter.present?
       # WHERE NOT
-      filter += ' AND' if @not_filter.present? && @filter.present?
+      filter += ' and ' if @not_filter.present? && @filter.present?
       filter += Filters::FilterWhere.apply_where(nil, @not_filter) if @not_filter.present?
       # GROUP BY
       filter += Filters::GroupBy.apply_group_by(@aggr_by) if @aggr_func.present? && @aggr_by.present?

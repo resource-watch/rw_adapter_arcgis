@@ -8,3 +8,5 @@ module Filters
     end
   end
 end
+
+# groupByFieldsForStatistics=Status&outStatistics='sum'
