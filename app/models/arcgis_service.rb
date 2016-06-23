@@ -21,12 +21,7 @@ class ArcgisService
     url =  URI.encode(@connect_data_url[/[^\?]+/].gsub('/query',''))
     url += query_to_run
 
-    @c = Curl::Easy.http_get(URI.escape(url)) do |curl|
-      curl.headers['Accept']       = 'application/json'
-      curl.headers['Content-Type'] = 'application/json'
-    end
-
-    Oj.load(@c.body_str.force_encoding(Encoding::UTF_8))[@connect_data_path] || Oj.load(@c.body_str.force_encoding(Encoding::UTF_8))
+    ConnectorService.connect_to_provider(url, @connect_data_path)
   end
 
   private
