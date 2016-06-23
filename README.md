@@ -1,6 +1,6 @@
 # Resource Watch Connector for Arcgis Service
 
-[![Build Status](https://travis-ci.org/resource-watch/rw_adapter_arcgis.svg?branch=develop)](https://travis-ci.org/resource-watch/rw_adapter_arcgis) [![Code Climate](https://codeclimate.com/github/resource-watch/rw_adapter_arcgis/badges/gpa.svg)](https://codeclimate.com/github/resource-watch/rw_adapter_arcgis) [![Test Coverage](https://codeclimate.com/github/resource-watch/rw_adapter_arcgis/badges/coverage.svg)](https://codeclimate.com/github/resource-watch/rw_adapter_arcgis/coverage)
+[![Build Status](https://travis-ci.org/resource-watch/rw_adapter_arcgis.svg?branch=master)](https://travis-ci.org/resource-watch/rw_adapter_arcgis) [![Code Climate](https://codeclimate.com/github/resource-watch/rw_adapter_arcgis/badges/gpa.svg)](https://codeclimate.com/github/resource-watch/rw_adapter_arcgis) [![Test Coverage](https://codeclimate.com/github/resource-watch/rw_adapter_arcgis/badges/coverage.svg)](https://codeclimate.com/github/resource-watch/rw_adapter_arcgis/coverage)
 
 TODO: Write a project description
 
