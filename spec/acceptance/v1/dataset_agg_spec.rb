@@ -8,7 +8,7 @@ module V1
       let!(:dataset_id) { Dataset.last.id }
       let!(:params)     {{"dataset": {
                           "id": "#{dataset_id}",
-                          "provider": "Arcgis",
+                          "provider": "featureservice",
                           "format": "JSON",
                           "name": "Arcgis test api",
                           "data_path": "features",
@@ -18,7 +18,7 @@ module V1
 
       let!(:params_q)   {{"dataset": {
                           "id": "#{dataset_id}",
-                          "provider": "Arcgis",
+                          "provider": "featureservice",
                           "format": "JSON",
                           "name": "Arcgis test api",
                           "data_path": "features",
