@@ -8,7 +8,7 @@ module V1
       let!(:dataset_id) { Dataset.last.id }
       let!(:params)     {{"dataset": {
                           "id": "#{dataset_id}",
-                          "provider": "Arcgis",
+                          "provider": "featureservice",
                           "format": "JSON",
                           "name": "Arcgis test api",
                           "data_path": "features",
@@ -18,7 +18,7 @@ module V1
 
       let!(:params_q)   {{"dataset": {
                           "id": "#{dataset_id}",
-                          "provider": "Arcgis",
+                          "provider": "featureservice",
                           "format": "JSON",
                           "name": "Arcgis test api",
                           "data_path": "features",
@@ -28,7 +28,7 @@ module V1
 
       context 'Aggregation with params' do
         it 'Allows aggregate Arcgis data by one attribute' do
-          post "/query/#{dataset_id}?select[]=District&filter=(Score<<100 <and> Score>=1)&filter_not=(FID==56)&aggr_by[]=Free_Lunch&aggr_func=sum&order[]=District", params: params
+          post "/query/#{dataset_id}?select[]=District&filter=(Score<<100 <and> Score>=1)&filter_not=(FID==56)&aggr_by[]=Free_Lunch&aggr_func=sum&group_by[]=District&order[]=District", params: params
 
           data = json['data']
 
@@ -39,7 +39,7 @@ module V1
         end
 
         it 'Allows aggregate Arcgis data by two attributes with order DESC' do
-          post "/query/#{dataset_id}?select[]=District,City&aggr_by[]=Free_Lunch,Reduced_Lu&aggr_func[]=sum,avg&order[]=-City", params: params_q
+          post "/query/#{dataset_id}?select[]=District,City&aggr_by[]=Free_Lunch,Reduced_Lu&aggr_func[]=sum,avg&group_by[]=District,City&order[]=-City", params: params_q
 
           data = json['data']
 
@@ -51,7 +51,7 @@ module V1
         end
 
         it 'Return error message for wrong params' do
-          post "/query/#{dataset_id}?select[]=Districtsss,City&aggr_by[]=Free_Lunch,Reduced_Lu&aggr_func[]=sum,avg&order[]=-City", params: params
+          post "/query/#{dataset_id}?select[]=Districtsss,City&aggr_by[]=Free_Lunch,Reduced_Lu&aggr_func[]=sum,avg&group_by[]=Districtsss,City&order[]=-City", params: params
 
           data = json['data']
 

@@ -7,6 +7,7 @@ class QueryParams < Hash
       not_filter: filter_params(params['filter_not']) || nil,
       aggr_by: params['aggr_by'].present? ? params['aggr_by'] : [],
       aggr_func: params['aggr_func'] || nil,
+      group: params['group_by'].present? ? params['group_by'] : [],
       limit: params['limit'] ||= standard_limit(params)
     }
 
