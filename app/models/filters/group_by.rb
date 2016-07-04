@@ -1,9 +1,9 @@
 module Filters
   class GroupBy
-    def self.apply_group_by(select_params, aggr_by, aggr_func)
-      to_select  = select_params.join(',')
-      group_by   = aggr_by.is_a?(Array) ? aggr_by.join(',').split(',') : aggr_by.split(',')
-      group_func = aggr_func.is_a?(Array) ? aggr_func.join(',').split(',') : aggr_func.split(',')
+    def self.apply_group_by(group_params, aggr_by, aggr_func)
+      to_select = group_params.join(',')
+      aggr_by   = aggr_by.is_a?(Array) ? aggr_by.join(',').split(',') : aggr_by.split(',')
+      aggr_func = aggr_func.is_a?(Array) ? aggr_func.join(',').split(',') : aggr_func.split(',')
 
       filter = ''
       filter += '&groupByFieldsForStatistics='
@@ -11,9 +11,9 @@ module Filters
       filter += '&outStatistics='
       filter += '['
 
-      group_by.each_index do |i|
+      aggr_by.each_index do |i|
         filter += ', ' if i > 0
-        filter += { statisticType: "#{group_func[i]}", onStatisticField: "#{group_by[i]}", outStatisticFieldName: "#{group_by[i]}" }.to_json
+        filter += { statisticType: "#{aggr_func[i]}", onStatisticField: "#{aggr_by[i]}", outStatisticFieldName: "#{aggr_by[i]}" }.to_json
       end
 
       filter += ']'
