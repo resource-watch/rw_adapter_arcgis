@@ -83,7 +83,13 @@
               {
                 "name": "aggr_by",
                 "in": "query",
-                "description": "Names of colums (separated by comma) to group data. example iso,population.",
+                "description": "Names of colums (separated by comma) to aggregate data. example population.",
+                "type": "string"
+              },
+              {
+                "name": "group_by",
+                "in": "query",
+                "description": "Names of colums (separated by comma) to group data. example iso.",
                 "type": "string"
               },
               {
