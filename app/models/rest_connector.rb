@@ -1,6 +1,7 @@
 class RestConnector
+  extend ActiveModel::Naming
   include ActiveModel::Serialization
-  attr_reader :id, :name, :provider, :format, :connector_url, :data_url, :data_path, :attributes_path
+  attr_reader :id
 
   def initialize(params)
     @dataset_params = params[:dataset] || params[:connector]
