@@ -22,11 +22,11 @@ module V1
           data = json['data'][0]['attributes']
 
           expect(status).to eq(200)
-          expect(data['FID']).not_to         be_nil
-          expect(data['Status']).not_to      be_nil
-          expect(data['City']).to            be_present
-          expect(json['data_attributes']).to be_present
-          expect(json['data'].length).to     eq(1)
+          expect(data['FID']).not_to     be_nil
+          expect(data['Status']).not_to  be_nil
+          expect(data['City']).to        be_present
+          expect(json['fields']).to      be_present
+          expect(json['data'].length).to eq(1)
         end
       end
 
