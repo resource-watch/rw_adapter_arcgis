@@ -19,6 +19,7 @@ class ConnectorService
         curl.headers['Content-Type']   = 'application/json'
         curl.headers['authentication'] = ServiceSetting.auth_token if ServiceSetting.auth_token.present?
       end
+      @c.perform
     end
 
     def connect_to_provider(connector_url, data_path)
@@ -28,6 +29,7 @@ class ConnectorService
         curl.headers['Accept']       = 'application/json'
         curl.headers['Content-Type'] = 'application/json'
       end
+      @c.perform
 
       Oj.load(@c.body_str.force_encoding(Encoding::UTF_8))[data_path] || Oj.load(@c.body_str.force_encoding(Encoding::UTF_8))
     end
