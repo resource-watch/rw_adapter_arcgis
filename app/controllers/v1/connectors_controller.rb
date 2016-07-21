@@ -3,7 +3,7 @@ module V1
     before_action :set_connector,    except: :info
     before_action :set_query_filter, except: :info
     before_action :set_uri,          except: :info
-    before_action :set_dataset,      only: :destroy
+    before_action :set_dataset,      only: [:update, :destroy]
 
     def show
       render json: @connector, serializer: ConnectorSerializer, query_filter: @query_filter, root: false, uri: @uri
@@ -13,11 +13,22 @@ module V1
       begin
         @dataset = Dataset.new(meta_data_params)
         @dataset.save
-        notify('saved')
+        notify(@dataset.id, 'saved')
         render json: { success: true, message: 'Dataset created' }, status: 201
       rescue
-        notify
+        notify(connector_params[:id])
         render json: { success: false, message: 'Error creating dataset' }, status: 422
+      end
+    end
+
+    def update
+      begin
+        @dataset.update(meta_data_params)
+        notify(@dataset.id, 'saved')
+        render json: { success: true, message: 'Dataset updated' }, status: 200
+      rescue
+        notify(@dataset.id)
+        render json: { success: false, message: 'Error updating dataset' }, status: 422
       end
     end
 
@@ -73,8 +84,8 @@ module V1
         @uri['full_path']       = request.fullpath
       end
 
-      def notify(status=nil)
-        Dataset.notifier(connector_params['id'], status) if ServiceSetting.auth_token.present?
+      def notify(dataset_id, status=nil)
+        Dataset.notifier(dataset_id, status) if ServiceSetting.auth_token.present?
       end
 
       def meta_data_params
