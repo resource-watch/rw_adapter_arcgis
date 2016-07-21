@@ -1,5 +1,5 @@
 {
-    "id": "rw_adapter_arcgis_v1",
+    "id": "rw_adapter_featureservice_v1",
     "name": "RW Adapter Arcgis v1",
     "urls": [
       {
@@ -18,7 +18,7 @@
         }]
       },
       {
-        "url": "/rest-datasets/arcgis",
+        "url": "/rest-datasets/featureservice",
         "method": "POST",
         "endpoints": [{
             "method": "POST",
@@ -27,7 +27,16 @@
         }]
       },
       {
-        "url": "/rest-datasets/arcgis/:id",
+        "url": "/rest-datasets/featureservice/:id",
+        "method": "POST",
+        "endpoints": [{
+            "method": "POST",
+            "baseUrl": "http://localhost:3035",
+            "path": "/datasets/:id"
+        }]
+      },
+      {
+        "url": "/rest-datasets/featureservice/:id",
         "method": "DELETE",
         "endpoints": [{
             "method": "DELETE",
