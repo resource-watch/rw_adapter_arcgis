@@ -24,6 +24,19 @@ module V1
         expect(Dataset.find('9b98340b-5f51-444a-bed7-2c5bf7a1894c').data_columns).to be_present
       end
 
+      it 'Allows update Arcgis data' do
+        post "/datasets/#{dataset_id}", params: {"connector": {
+                                                 "id": "#{dataset_id}",
+                                                 "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json",
+                                                 "data_horizon": 3
+                                                }}
+
+        expect(status).to eq(200)
+        expect(json['success']).to                       eq(true)
+        expect(Dataset.find(dataset_id).data_columns).to be_present
+        expect(Dataset.find(dataset_id).data_horizon).to eq(3)
+      end
+
       it 'If dataset_url failed' do
         post "/datasets", params: params_failed
 

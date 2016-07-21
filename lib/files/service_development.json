@@ -28,6 +28,15 @@
       },
       {
         "url": "/rest-datasets/featureservice/:id",
+        "method": "POST",
+        "endpoints": [{
+            "method": "POST",
+            "baseUrl": "http://192.168.99.100:3035",
+            "path": "/datasets/:id"
+        }]
+      },
+      {
+        "url": "/rest-datasets/featureservice/:id",
         "method": "DELETE",
         "endpoints": [{
             "method": "DELETE",
