@@ -3,8 +3,8 @@
 # Table name: datasets
 #
 #  id           :uuid             not null, primary key
-#  data_columns :jsonb            default("{}")
-#  data_horizon :integer          default("0")
+#  data_columns :jsonb
+#  data_horizon :integer          default(0)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
