@@ -1,6 +1,7 @@
 {
     "id": "rw_adapter_featureservice_v1",
     "name": "RW Adapter Arcgis v1",
+    "tags": ["rw"],
     "urls": [
       {
         "url": "/query/:dataset",
