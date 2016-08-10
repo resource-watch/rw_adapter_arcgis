@@ -3,10 +3,10 @@ module V1
     before_action :set_connector,    except: :info
     before_action :set_query_filter, except: :info
     before_action :set_uri,          except: :info
-    before_action :set_dataset,      only: [:update, :destroy]
+    before_action :set_dataset,      only: [:show, :update, :destroy]
 
     def show
-      render json: @connector, serializer: ConnectorSerializer, query_filter: @query_filter, root: false, uri: @uri
+      render json: @connector, serializer: ConnectorSerializer, query_filter: @query_filter, root: false, meta: { cloneUrl: clone_url }
     end
 
     def create
@@ -98,6 +98,30 @@ module V1
 
       def connector_params
         params.require(:connector).permit(:id, :connector_url, :attributes_path)
+      end
+
+      def clone_url
+        data = {}
+        data['http_method'] = 'POST'
+        data['url']         = "#{URI.parse(clone_uri)}"
+        data['body']        = body_params
+        data
+      end
+
+      def uri
+        "#{@uri['api_gateway_url']}#{@uri['full_path']}"
+      end
+
+      def clone_uri
+        "#{@uri['api_gateway_url']}/datasets/#{@dataset.id}/clone"
+      end
+
+      def body_params
+        {
+          "dataset" => {
+            "dataset_url" => "#{URI.parse(uri)}"
+          }
+        }
       end
   end
 end
