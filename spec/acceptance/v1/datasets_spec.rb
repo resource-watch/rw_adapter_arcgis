@@ -26,7 +26,6 @@ module V1
           expect(data['FID']).not_to     be_nil
           expect(data['Status']).not_to  be_nil
           expect(data['City']).to        be_present
-          expect(json['fields']).to      be_present
           expect(json['data'].length).to eq(1)
         end
       end
@@ -156,6 +155,16 @@ module V1
 
           expect(status).to eq(200)
           expect(json['data'].length).to eq(3)
+        end
+      end
+
+      context 'For fields info' do
+        it 'Allows access Json data with default limit 1' do
+          post "/fields/#{dataset_id}", params: params
+
+          expect(status).to eq(200)
+          expect(json['fields']).to         be_present
+          expect(json['table_name']).not_to eq('data')
         end
       end
     end

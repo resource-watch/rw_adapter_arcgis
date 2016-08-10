@@ -40,7 +40,6 @@ module V1
           expect(status).to eq(200)
           expect(data.size).to                         eq(13)
           expect(data[0]['attributes']['District']).to eq('Baldwinsville')
-          expect(json['fields']).to                    be_present
         end
 
         it 'Allows aggregate Arcgis data by one attribute using sql' do
@@ -51,7 +50,6 @@ module V1
           expect(status).to eq(200)
           expect(data.size).to                         eq(13)
           expect(data[0]['attributes']['District']).to eq('Baldwinsville')
-          expect(json['fields']).to                    be_present
         end
 
         it 'Allows aggregate Arcgis data by two attributes with order DESC using sql' do
