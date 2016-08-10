@@ -19,6 +19,21 @@
         }]
       },
       {
+        "url": "/fields/:dataset",
+        "method": "GET",
+        "paramProvider": "dataset",
+        "dataProvider": "dataset",
+        "filters":{
+            "provider": "rwjson"
+        },
+        "endpoints": [{
+            "method": "POST",
+            "baseUrl": "http://localhost:3035",
+            "path": "/fields/:dataset",
+            "data": ["dataset"]
+        }]
+      },
+      {
         "url": "/rest-datasets/featureservice",
         "method": "POST",
         "endpoints": [{

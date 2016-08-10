@@ -17,20 +17,18 @@ class QueryService
 
       @request.on_complete do |response|
         if response.success?
-          # cool
+          @data = Oj.load(@request.response.body.force_encoding(Encoding::UTF_8))['data']['attributes']['query'] || Oj.load(@request.response.body.force_encoding(Encoding::UTF_8))
         elsif response.timed_out?
-          'got a time out'
+          @data = 'got a time out'
         elsif response.code.zero?
-          response.return_message
+          @data = response.return_message
         else
-          'HTTP request failed: ' + response.code.to_s
+          @data = Oj.load(response.body)
         end
       end
-
       hydra.queue @request
       hydra.run
-
-      Oj.load(@request.response.body.force_encoding(Encoding::UTF_8))['data']['attributes']['query'] || Oj.load(@request.response.body.force_encoding(Encoding::UTF_8))
+      @data
     end
   end
 end
