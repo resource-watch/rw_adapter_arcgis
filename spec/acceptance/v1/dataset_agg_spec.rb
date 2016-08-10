@@ -35,7 +35,7 @@ module V1
         it 'Allows aggregate Arcgis data by one attribute using fs' do
           post "/query/#{dataset_id}?outFields=District&outStatistics=#{group_attr_1}&tableName=Public_Schools_in_Onondaga_County&where=Score < 100 and Score >= 1 and FID != 56&groupByFieldsForStatistics=District&orderByFields=District ASC", params: params
 
-          data = json['data']
+          data = json['attributes']['data']
 
           expect(status).to eq(200)
           expect(data.size).to                         eq(13)
@@ -45,7 +45,7 @@ module V1
         it 'Allows aggregate Arcgis data by one attribute using sql' do
           post "/query/#{dataset_id}?sql=select District,sum(Free_Lunch) as Free_Lunch from Public_Schools_in_Onondaga_County where Score < 100 and Score >= 1 and FID != 56 group by District order by District ASC", params: params
 
-          data = json['data']
+          data = json['attributes']['data']
 
           expect(status).to eq(200)
           expect(data.size).to                         eq(13)
@@ -55,7 +55,7 @@ module V1
         it 'Allows aggregate Arcgis data by two attributes with order DESC using sql' do
           post "/query/#{dataset_id}?sql=select District,City,sum(Free_Lunch) as Free_Lunch,avg(Reduced_Lu) as Reduced_Lu from Public_Schools_in_Onondaga_County group by District,City order by City DESC", params: params_q
 
-          data = json['data']
+          data = json['attributes']['data']
 
           expect(status).to eq(200)
           expect(data.size).to                           eq(28)
@@ -67,7 +67,7 @@ module V1
         it 'Allows aggregate Arcgis data by two attributes with order DESC using fs' do
           post "/query/#{dataset_id}?outFields=District,City&outStatistics=#{group_attr_2}&tableName=Public_Schools_in_Onondaga_County&where=Score < 100 and Score >= 1 and FID != 56&groupByFieldsForStatistics=District,City&orderByFields=City DESC", params: params_q
 
-          data = json['data']
+          data = json['attributes']['data']
 
           expect(status).to eq(200)
           expect(data.size).to                           eq(19)
@@ -79,7 +79,7 @@ module V1
         it 'Return error message for wrong params' do
           post "/query/#{dataset_id}?sql=select Districtsss,City,sum(Free_Lunch) as Free_Lunch,avg(Reduced_Lus) as Reduced_Lu from Public_Schools_in_Onondaga_County group by District,City order by City ASC", params: params
 
-          data = json['data']
+          data = json['attributes']['data']
 
           expect(status).to                      eq(200)
           expect(data['error']['details'][0]).to eq('Unable to perform query. Please check your parameters.')
