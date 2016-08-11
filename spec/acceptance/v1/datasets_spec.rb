@@ -13,7 +13,8 @@ module V1
                       "format": "JSON",
                       "name": "Arcgis test api",
                       "attributes_path": "fields",
-                      "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json"
+                      "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json",
+                      "table_name": "Public_Schools_in_Onondaga_County"
                     }}}
 
       context 'Without params' do
@@ -159,12 +160,12 @@ module V1
       end
 
       context 'For fields info' do
-        it 'Allows access Json data with default limit 1' do
+        it 'Allows access fields info' do
           post "/fields/#{dataset_id}", params: params
 
           expect(status).to eq(200)
-          expect(json['attributes']['fields']).to         be_present
-          expect(json['attributes']['tableName']).not_to eq('data')
+          expect(json['attributes']['fields']).to        be_present
+          expect(json['attributes']['tableName']).not_to eq('Public_Schools_in_Onondaga_County')
         end
       end
     end

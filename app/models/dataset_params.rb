@@ -6,6 +6,7 @@ class DatasetParams < Hash
       provider: params['provider'] || nil,
       format: params['format'] || nil,
       connector_url: params['connector_url'] || nil,
+      table_name: params[:table_name] ||= table_name_param(params[:connector_url]),
       data_path: params['data_path'] || 'features',
       data_horizon: params['data_horizon'] || nil,
       attributes_path: params['attributes_path'] || 'fields'
@@ -17,5 +18,9 @@ class DatasetParams < Hash
 
   def self.sanitize(params)
     new(params)
+  end
+
+  def table_name_param(connector_url)
+    URI(connector_url).path.split(/services|FeatureServer/)[1].gsub('/','')
   end
 end
