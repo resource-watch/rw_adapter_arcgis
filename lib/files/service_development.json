@@ -23,7 +23,7 @@
         "paramProvider": "dataset",
         "dataProvider": "dataset",
         "filters":{
-            "provider": "rwjson"
+            "provider": "featureservice"
         },
         "endpoints": [{
             "method": "POST",
