@@ -164,8 +164,8 @@ module V1
           post "/fields/#{dataset_id}", params: params
 
           expect(status).to eq(200)
-          expect(json['attributes']['fields']).to        be_present
-          expect(json['attributes']['tableName']).not_to eq('Public_Schools_in_Onondaga_County')
+          expect(json['attributes']['fields']).to    be_present
+          expect(json['attributes']['tableName']).to eq('Public_Schools_in_Onondaga_County')
         end
       end
     end
