@@ -5,15 +5,15 @@ require 'oj'
 module QueryService
   class << self
     def connect_to_query_service(sql_params)
-      url = URI.decode("#{ServiceSetting.gateway_url}/convert/sql2FS?sql=#{sql_params}")
+      url = URI.decode("#{Service::SERVICE_URL}/convert/sql2FS?sql=#{sql_params}")
 
       headers = {}
       headers['Accept']         = 'application/json'
       headers['Content-Type']   = 'application/json'
-      headers['authentication'] = ServiceSetting.auth_token if ServiceSetting.auth_token.present?
+      headers['authentication'] = Service::SERVICE_TOKEN
 
       hydra    = Typhoeus::Hydra.new max_concurrency: 100
-      @request = ::Typhoeus::Request.new(URI.escape(url), method: :get, headers: headers, followlocation: true)
+      @request = Typhoeus::Request.new(URI.escape(url), method: :get, headers: headers, followlocation: true)
 
       @request.on_complete do |response|
         if response.success?
