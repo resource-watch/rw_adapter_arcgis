@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ConnectorSerializer < ActiveModel::Serializer
   attributes :clone_url, :data
 
