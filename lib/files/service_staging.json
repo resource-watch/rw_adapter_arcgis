@@ -9,7 +9,11 @@
         "paramProvider": "dataset",
         "dataProvider": "dataset",
         "filters":{
-            "provider": "featureservice"
+          "data": {
+              "attributes": {
+                "provider": "featureservice"
+              }
+            }
         },
         "endpoints": [{
             "method": "POST",
@@ -24,7 +28,11 @@
         "paramProvider": "dataset",
         "dataProvider": "dataset",
         "filters":{
-            "provider": "featureservice"
+          "data": {
+              "attributes": {
+                "provider": "featureservice"
+              }
+            }
         },
         "endpoints": [{
             "method": "POST",
