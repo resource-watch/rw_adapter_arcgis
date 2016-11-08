@@ -17,15 +17,15 @@ module V1
                           "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json"
                         }}}
 
-      let!(:params_q)   {{"dataset": {
-                          "id": "#{dataset_id}",
-                          "provider": "featureservice",
-                          "format": "JSON",
-                          "name": "Arcgis test api",
-                          "data_path": "features",
-                          "attributes_path": "fields",
-                          "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?outFields=District,City&where=1=1&f=json"
-                        }}}
+      let!(:params_q)   {{"connector": {"dataset": {"data": {
+                                      "id": "#{dataset_id}",
+                                      "provider": "featureservice",
+                                      "format": "JSON",
+                                      "name": "Arcgis test api",
+                                      "data_path": "features",
+                                      "attributes_path": "fields",
+                                      "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?outFields=District,City&where=1=1&f=json"
+                                    }}}}}
 
       let(:group_attr_1) { URI.encode(Oj.dump([{"onStatisticField":"Free_Lunch","statisticType":"sum","outStatisticFieldName":"Free_Lunch"}])) }
       let(:group_attr_2) { URI.encode(Oj.dump([{"onStatisticField":"Free_Lunch","statisticType":"sum","outStatisticFieldName":"Free_Lunch"},{"onStatisticField":"Reduced_Lu","statisticType":"avg","outStatisticFieldName":"Reduced_Lu"}])) }
