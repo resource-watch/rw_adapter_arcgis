@@ -8,13 +8,13 @@ module V1
 
       let!(:dataset_id) { Dataset.first.id }
       let!(:params) {{"connector": {"dataset": {"data": {
-                                  "id": "#{dataset_id}",
-                                  "provider": "featureservice",
-                                  "format": "JSON",
-                                  "name": "Arcgis test api",
-                                  "attributes_path": "fields",
-                                  "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json",
-                                  "table_name": "Public_Schools_in_Onondaga_County"
+                                  "id": "#{dataset_id}","attributes": {
+                                                                    "provider": "featureservice",
+                                                                    "format": "JSON",
+                                                                    "name": "Arcgis test api",
+                                                                    "attributes_path": "fields",
+                                                                    "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json",
+                                                                    "table_name": "Public_Schools_in_Onondaga_County"}
                                 }}}}}
 
       context 'Without params' do
