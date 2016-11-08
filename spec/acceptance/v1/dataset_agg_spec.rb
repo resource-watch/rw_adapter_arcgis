@@ -12,9 +12,9 @@ module V1
                           "provider": "featureservice",
                           "format": "JSON",
                           "name": "Arcgis test api",
-                          "data_path": "features",
-                          "attributes_path": "fields",
-                          "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json"
+                          "dataPath": "features",
+                          "attributesPath": "fields",
+                          "connectorUrl": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json"
                         }}}
 
       let!(:params_q)   {{"connector": {"dataset": {"data": {
@@ -22,9 +22,9 @@ module V1
                                       "attributes": {"provider": "featureservice",
                                                                               "format": "JSON",
                                                                               "name": "Arcgis test api",
-                                                                              "data_path": "features",
-                                                                              "attributes_path": "fields",
-                                                                              "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?outFields=District,City&where=1=1&f=json"
+                                                                              "dataPath": "features",
+                                                                              "attributesPath": "fields",
+                                                                              "connectorUrl": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?outFields=District,City&where=1=1&f=json"
                                     }}}}}}
 
       let(:group_attr_1) { URI.encode(Oj.dump([{"onStatisticField":"Free_Lunch","statisticType":"sum","outStatisticFieldName":"Free_Lunch"}])) }
