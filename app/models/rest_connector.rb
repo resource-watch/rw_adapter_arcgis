@@ -2,10 +2,11 @@
 class RestConnector
   extend ActiveModel::Naming
   include ActiveModel::Serialization
+  include HashFinder
   attr_reader :id, :table_name
 
   def initialize(params)
-    @dataset_params = if params[:connector].present? && params[:connector][:dataset].present?
+    @dataset_params = if params[:connector].present? && params[:connector].to_unsafe_hash.recursive_has_key?(:attributes)
                         params[:connector][:dataset][:data].merge(params[:connector][:dataset][:data][:attributes].to_unsafe_hash)
                       else
                         params[:dataset] || params[:connector]
