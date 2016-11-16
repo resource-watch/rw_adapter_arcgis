@@ -56,10 +56,10 @@ test:
 
 staging:
   <<: *default
-  database: arcgis_adapter_production
+  database: arcgis_adapter
   password: <%= ENV['POSTGRES_PASS'] %>
 
 production:
   <<: *default
-  database: arcgis_adapter
+  database: arcgis_adapter_production
   password: <%= ENV['POSTGRES_PASS'] %>
