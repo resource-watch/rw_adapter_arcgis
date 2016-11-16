@@ -19,6 +19,21 @@
         }]
       },
       {
+        "url": "/query/:dataset",
+        "method": "POST",
+        "paramProvider": "dataset",
+        "dataProvider": "dataset",
+        "filters":{
+            "provider": "featureservice"
+        },
+        "endpoints": [{
+            "method": "POST",
+            "baseUrl": "http://localhost:3035",
+            "path": "/query/:dataset",
+            "data": ["dataset"]
+        }]
+      },
+      {
         "url": "/fields/:dataset",
         "method": "GET",
         "paramProvider": "dataset",
