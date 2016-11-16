@@ -26,7 +26,7 @@ class ConnectorSerializer < ActiveModel::Serializer
     {
       "dataset" => {
         "dataset_url" => "#{URI.parse(uri)}",
-        "apps" => ["your","apps"]
+        "application" => ["your","apps"]
       }
     }
   end
