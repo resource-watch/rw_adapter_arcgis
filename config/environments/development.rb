@@ -17,12 +17,12 @@ Rails.application.configure do
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
-    config.cache_store = :memory_store
-    config.public_file_server.headers = {
-      'Cache-Control' => 'public, max-age=172800'
-    }
+    # config.action_mailer.perform_caching = false
+    config.cache_store = :redis_store, Rails.application.config.redis_url, { expires_in: 1.minutes }
   else
     config.action_controller.perform_caching = false
+
+    # config.action_mailer.perform_caching = false
 
     config.cache_store = :null_store
   end
