@@ -15,8 +15,22 @@ class RestConnector
   end
 
   def data(options = {})
-    get_data = ArcgisService.new(@connector_url, @data_path, options)
-    get_data.connect_data
+    cache_options  = "results_#{self.id}"
+    cache_options += "_#{options}" if options.present?
+
+    if results = Rails.cache.read(cache_key(cache_options))
+      results
+    else
+      get_data = ArcgisService.new(@connector_url, @data_path, options)
+      results  = get_data.connect_data
+
+      Rails.cache.write(cache_key(cache_options), results.to_a) if results.present?
+    end
+    results
+  end
+
+  def cache_key(cache_options)
+    "query_#{ cache_options }"
   end
 
   def recive_dataset_meta
