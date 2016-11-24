@@ -15,11 +15,11 @@ class ConnectorSerializer < ActiveModel::Serializer
   end
 
   def uri
-    "#{@uri['api_gateway_url']}#{@uri['full_path']}"
+    "#{@uri['full_path']}"
   end
 
   def clone_uri
-    "#{@uri['api_gateway_url']}/dataset/#{object.id}/clone"
+    "/dataset/#{object.id}/clone"
   end
 
   def body_params
