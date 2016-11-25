@@ -38,14 +38,28 @@ class RestConnector
     @data_horizon      = @data_horizon.present? ? @data_horizon : 0
     if @recive_attributes.to_s.include?('error')
       nil
-    elsif @recive_attributes.any?
-      { dataset: { id: @id, data_columns: @recive_attributes, data_horizon: @data_horizon } }
+    elsif @recive_attributes.present?
+      { dataset: { id: @id, data_columns: convert(@recive_attributes), data_horizon: @data_horizon } }
     end
+  end
 
+  def convert(recived_attributes)
+    new_attributes = {}
+    case recived_attributes
+    when Array
+      recived_attributes.each do |v|
+        new_attributes[v['name']] = { type: v['type'] }
+      end
+    when Hash
+      new_attributes = recived_attributes
+    else
+      new_attributes = nil
+    end
+    new_attributes
   end
 
   def data_columns
-    Dataset.find(@id).try(:data_columns)
+    convert(Dataset.find(@id).try(:data_columns))
   end
 
   def data_horizon

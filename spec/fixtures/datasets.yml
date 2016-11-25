@@ -11,7 +11,7 @@
 
 ---
 dataset_1:
-  data_columns: '[
+  data_columns: [
                   {
                     "name": "FID",
                     "type": "esriFieldTypeInteger",
@@ -19,229 +19,13 @@ dataset_1:
                     "sqlType": "sqlTypeInteger",
                     "domain": null,
                     "defaultValue": null
-                  },
-                  {
-                    "name": "Status",
-                    "type": "esriFieldTypeString",
-                    "alias": "Status",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 1,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Score",
-                    "type": "esriFieldTypeDouble",
-                    "alias": "Score",
-                    "sqlType": "sqlTypeFloat",
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Match_type",
-                    "type": "esriFieldTypeString",
-                    "alias": "Match_type",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 2,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Match_addr",
-                    "type": "esriFieldTypeString",
-                    "alias": "Match_addr",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 120,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Side",
-                    "type": "esriFieldTypeString",
-                    "alias": "Side",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 1,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Ref_ID",
-                    "type": "esriFieldTypeInteger",
-                    "alias": "Ref_ID",
-                    "sqlType": "sqlTypeInteger",
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "User_fld",
-                    "type": "esriFieldTypeString",
-                    "alias": "User_fld",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 120,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Addr_type",
-                    "type": "esriFieldTypeString",
-                    "alias": "Addr_type",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 20,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "ARC_Street",
-                    "type": "esriFieldTypeString",
-                    "alias": "ARC_Street",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 100,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "ARC_City",
-                    "type": "esriFieldTypeString",
-                    "alias": "ARC_City",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 40,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "ARC_ZIP",
-                    "type": "esriFieldTypeString",
-                    "alias": "ARC_ZIP",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 10,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Name",
-                    "type": "esriFieldTypeString",
-                    "alias": "Name",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 254,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Address",
-                    "type": "esriFieldTypeString",
-                    "alias": "Address",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 254,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "City",
-                    "type": "esriFieldTypeString",
-                    "alias": "City",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 254,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "State",
-                    "type": "esriFieldTypeString",
-                    "alias": "State",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 254,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Zip",
-                    "type": "esriFieldTypeDouble",
-                    "alias": "Zip",
-                    "sqlType": "sqlTypeFloat",
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Type",
-                    "type": "esriFieldTypeString",
-                    "alias": "Type",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 254,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "District",
-                    "type": "esriFieldTypeString",
-                    "alias": "District",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 254,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Grades",
-                    "type": "esriFieldTypeString",
-                    "alias": "Grades",
-                    "sqlType": "sqlTypeNVarchar",
-                    "length": 254,
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Free_Lunch",
-                    "type": "esriFieldTypeDouble",
-                    "alias": "Free_Lunch",
-                    "sqlType": "sqlTypeFloat",
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Reduced_Lu",
-                    "type": "esriFieldTypeDouble",
-                    "alias": "Reduced_Lu",
-                    "sqlType": "sqlTypeFloat",
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Limited_En",
-                    "type": "esriFieldTypeDouble",
-                    "alias": "Limited_En",
-                    "sqlType": "sqlTypeFloat",
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Not_Taught",
-                    "type": "esriFieldTypeDouble",
-                    "alias": "Not_Taught",
-                    "sqlType": "sqlTypeFloat",
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "F_of_teach",
-                    "type": "esriFieldTypeDouble",
-                    "alias": "_of_teach",
-                    "sqlType": "sqlTypeFloat",
-                    "domain": null,
-                    "defaultValue": null
-                  },
-                  {
-                    "name": "Number_of",
-                    "type": "esriFieldTypeDouble",
-                    "alias": "Number_of",
-                    "sqlType": "sqlTypeFloat",
-                    "domain": null,
-                    "defaultValue": null
                   }
-                ]'
+                ]
   data_horizon: 0
   created_at: '2016-03-01 20:00:00.050118'
   updated_at: '2016-03-01 20:00:00.050118'
 dataset_2:
-  data_columns: '[{
+  data_columns: [{
                     "name": "FID",
                     "type": "esriFieldTypeInteger",
                     "alias": "FID",
@@ -465,7 +249,7 @@ dataset_2:
                     "domain": null,
                     "defaultValue": null
                   }
-                ]'
+                ]
   data_horizon: 1
   created_at: '2016-03-02 20:00:00.050118'
   updated_at: '2016-03-02 20:00:00.050118'

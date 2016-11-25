@@ -164,7 +164,7 @@ module V1
           post "/fields/#{dataset_id}", params: params
 
           expect(status).to eq(200)
-          expect(json['fields']).to    be_present
+          expect(json['fields']).to    eq({"FID"=>{"type"=>"esriFieldTypeInteger"}})
           expect(json['tableName']).to eq('Public_Schools_in_Onondaga_County')
         end
       end
