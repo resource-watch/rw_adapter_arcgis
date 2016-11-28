@@ -30,7 +30,6 @@ module V1
       let(:group_attr_1) { URI.encode(Oj.dump([{"onStatisticField":"Free_Lunch","statisticType":"sum","outStatisticFieldName":"Free_Lunch"}])) }
       let(:group_attr_2) { URI.encode(Oj.dump([{"onStatisticField":"Free_Lunch","statisticType":"sum","outStatisticFieldName":"Free_Lunch"},{"onStatisticField":"Reduced_Lu","statisticType":"avg","outStatisticFieldName":"Reduced_Lu"}])) }
 
-
       context 'Aggregation with params' do
         it 'Allows aggregate Arcgis data by one attribute using fs' do
           post "/query/#{dataset_id}?outFields=District&outStatistics=#{group_attr_1}&tableName=Public_Schools_in_Onondaga_County&where=Score < 100 and Score >= 1 and FID != 56&groupByFieldsForStatistics=District&orderByFields=District ASC", params: params
@@ -83,6 +82,15 @@ module V1
 
           expect(status).to                      eq(200)
           expect(data['error']['details'][0]).to eq('Unable to perform query. Please check your parameters.')
+        end
+
+        it 'Select count' do
+          post "/query/#{dataset_id}?sql=select count(*) from Public_Schools_in_Onondaga_County", params: params
+
+          data = json['data']
+
+          expect(status).to eq(200)
+          expect(data['count']).to eq(124)
         end
       end
     end
