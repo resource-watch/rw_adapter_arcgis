@@ -15,17 +15,17 @@ class RestConnector
   end
 
   def data(options = {})
-    cache_options  = "results_#{self.id}"
-    cache_options += "_#{options}" if options.present?
+    # cache_options  = "results_#{self.id}"
+    # cache_options += "_#{options}" if options.present?
 
-    if results = Rails.cache.read(cache_key(cache_options))
-      results
-    else
-      get_data = ArcgisService.new(@connector_url, @data_path, options)
-      results  = get_data.connect_data
+    # if results = Rails.cache.read(cache_key(cache_options))
+    #   results
+    # else
+    get_data = ArcgisService.new(@connector_url, @data_path, options)
+    results  = get_data.connect_data
 
-      Rails.cache.write(cache_key(cache_options), results.to_a) if results.present?
-    end
+    #   Rails.cache.write(cache_key(cache_options), results.to_a) if results.present?
+    # end
     results
   end
 
