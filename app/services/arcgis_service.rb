@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'uri'
 
 class ArcgisService
@@ -9,7 +10,7 @@ class ArcgisService
   end
 
   def connect_data
-    standard_params = '&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&f=json'
+    standard_params = '&returnGeometry=false&returnDistinctValues=false&f=json'
     query_to_run    = if @options_hash.present?
                         query_params = "/query#{options_query}#{standard_params}".gsub('&&','&').gsub('??','?').gsub('queryoutFields', 'query?outFields')
                         query_params = query_params + '&where=1=1' unless query_params.include?('&where')
@@ -45,6 +46,7 @@ class ArcgisService
       query_path += "groupByFieldsForStatistics=#{@groupByFieldsForStatistics}&" if @groupByFieldsForStatistics.present?
       query_path += "outStatistics=#{@outStatistics}&"                           if @outStatistics.present?
       query_path += "statisticType=#{@statisticType}&"                           if @statisticType.present?
+      query_path += "returnCountOnly=true&"                                      if @returnCountOnly.present?
       sql_path    = "#{@sql}"                                                    if @sql.present?
 
       filter  = if @sql.present?

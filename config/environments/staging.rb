@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -47,6 +48,10 @@ Rails.application.configure do
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   end
+
+  # Use a different cache store in production.
+  # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_store, Rails.application.config.redis_url, { expires_in: 60.minutes }
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store

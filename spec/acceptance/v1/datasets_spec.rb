@@ -7,15 +7,15 @@ module V1
       fixtures :service_settings
 
       let!(:dataset_id) { Dataset.first.id }
-      let!(:params) {{"dataset": {
-                      "id": "#{dataset_id}",
-                      "provider": "featureservice",
-                      "format": "JSON",
-                      "name": "Arcgis test api",
-                      "attributes_path": "fields",
-                      "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json",
-                      "table_name": "Public_Schools_in_Onondaga_County"
-                    }}}
+      let!(:params) {{"connector": {"dataset": {"data": {
+                                  "id": "#{dataset_id}","attributes": {
+                                                                    "provider": "featureservice",
+                                                                    "format": "JSON",
+                                                                    "name": "Arcgis test api",
+                                                                    "attributes_path": "fields",
+                                                                    "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json",
+                                                                    "table_name": "Public_Schools_in_Onondaga_County"}
+                                }}}}}
 
       context 'Without params' do
         it 'Allows access Arcgis data with default limit 1' do
@@ -164,7 +164,7 @@ module V1
           post "/fields/#{dataset_id}", params: params
 
           expect(status).to eq(200)
-          expect(json['fields']).to    be_present
+          expect(json['fields']).to    eq({"FID"=>{"type"=>"esriFieldTypeInteger"}})
           expect(json['tableName']).to eq('Public_Schools_in_Onondaga_County')
         end
       end

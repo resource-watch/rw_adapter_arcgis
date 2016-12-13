@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'curb'
 require 'typhoeus'
 require 'uri'
@@ -12,8 +13,8 @@ module ConnectorService
                else 2
                end
 
-      params = { dataset: { dataset_attributes: { status: status } } }
-      url    = URI.decode("#{Service::SERVICE_URL}/datasets/#{dataset_id}")
+      params = { dataset: { status: status } }
+      url    = URI.decode("#{Service::SERVICE_URL}/dataset/#{dataset_id}")
 
       @c = Curl::Easy.http_put(URI.escape(url), Oj.dump(params)) do |curl|
         curl.headers['Accept']         = 'application/json'

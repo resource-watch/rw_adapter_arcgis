@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module V1
   class ConnectorsController < ApplicationController
     before_action :set_connector,    except: :info
@@ -68,13 +69,13 @@ module V1
         @query_filter['groupByFieldsForStatistics'] = params[:groupByFieldsForStatistics] if params[:groupByFieldsForStatistics].present?
         @query_filter['outStatistics']              = params[:outStatistics]              if params[:outStatistics].present?
         @query_filter['statisticType']              = params[:statisticType]              if params[:statisticType].present?
-        # For convert endpoint checkSQL
+        # For convert endpoint sql2SQL
         @query_filter['sql']                        = params[:sql]                        if params[:sql].present?
       end
 
       def set_uri
         @uri = {}
-        @uri['api_gateway_url'] = ENV['API_GATEWAY_URL'] if ENV['API_GATEWAY_URL'].present?
+        @uri['api_gateway_url'] = Service::SERVICE_URL
         @uri['full_path']       = request.fullpath
       end
 

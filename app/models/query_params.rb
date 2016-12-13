@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class QueryParams < Hash
   def initialize(params)
     sanitized_params = {
@@ -10,6 +11,7 @@ class QueryParams < Hash
       groupByFieldsForStatistics: params['groupByFieldsForStatistics'] || nil,
       outStatistics:              params['outStatistics']              || nil,
       statisticType:              params['statisticType']              || nil,
+      returnCountOnly:            params['returnCountOnly']            || nil,
       limit:                      params['limit']                      ||= standard_limit(params)
     }
 

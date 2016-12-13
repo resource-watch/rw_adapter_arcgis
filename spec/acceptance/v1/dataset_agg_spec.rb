@@ -12,24 +12,23 @@ module V1
                           "provider": "featureservice",
                           "format": "JSON",
                           "name": "Arcgis test api",
-                          "data_path": "features",
-                          "attributes_path": "fields",
-                          "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json"
+                          "dataPath": "features",
+                          "attributesPath": "fields",
+                          "connectorUrl": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json"
                         }}}
 
-      let!(:params_q)   {{"dataset": {
-                          "id": "#{dataset_id}",
-                          "provider": "featureservice",
-                          "format": "JSON",
-                          "name": "Arcgis test api",
-                          "data_path": "features",
-                          "attributes_path": "fields",
-                          "connector_url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?outFields=District,City&where=1=1&f=json"
-                        }}}
+      let!(:params_q)   {{"connector": {"dataset": {"data": {
+                                      "id": "#{dataset_id}",
+                                      "attributes": {"provider": "featureservice",
+                                                                              "format": "JSON",
+                                                                              "name": "Arcgis test api",
+                                                                              "dataPath": "features",
+                                                                              "attributesPath": "fields",
+                                                                              "connectorUrl": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?outFields=District,City&where=1=1&f=json"
+                                    }}}}}}
 
       let(:group_attr_1) { URI.encode(Oj.dump([{"onStatisticField":"Free_Lunch","statisticType":"sum","outStatisticFieldName":"Free_Lunch"}])) }
       let(:group_attr_2) { URI.encode(Oj.dump([{"onStatisticField":"Free_Lunch","statisticType":"sum","outStatisticFieldName":"Free_Lunch"},{"onStatisticField":"Reduced_Lu","statisticType":"avg","outStatisticFieldName":"Reduced_Lu"}])) }
-
 
       context 'Aggregation with params' do
         it 'Allows aggregate Arcgis data by one attribute using fs' do
@@ -83,6 +82,15 @@ module V1
 
           expect(status).to                      eq(200)
           expect(data['error']['details'][0]).to eq('Unable to perform query. Please check your parameters.')
+        end
+
+        it 'Select count' do
+          post "/query/#{dataset_id}?sql=select count(*) from Public_Schools_in_Onondaga_County", params: params
+
+          data = json['data']
+
+          expect(status).to eq(200)
+          expect(data['count']).to eq(124)
         end
       end
     end
