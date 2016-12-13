@@ -9,7 +9,11 @@
         "paramProvider": "dataset",
         "dataProvider": "dataset",
         "filters":{
-            "provider": "featureservice"
+          "data": {
+              "attributes": {
+                "provider": "featureservice"
+              }
+            }
         },
         "endpoints": [{
             "method": "POST",
@@ -24,7 +28,11 @@
         "paramProvider": "dataset",
         "dataProvider": "dataset",
         "filters":{
-            "provider": "featureservice"
+          "data": {
+              "attributes": {
+                "provider": "featureservice"
+              }
+            }
         },
         "endpoints": [{
             "method": "POST",
@@ -39,7 +47,11 @@
         "paramProvider": "dataset",
         "dataProvider": "dataset",
         "filters":{
-            "provider": "featureservice"
+          "data": {
+              "attributes": {
+                "provider": "featureservice"
+              }
+            }
         },
         "endpoints": [{
             "method": "POST",
@@ -51,7 +63,6 @@
       {
         "url": "/rest-datasets/featureservice",
         "method": "POST",
-        "authenticated": true,
         "endpoints": [{
             "method": "POST",
             "baseUrl": "http://localhost:3035",
@@ -61,7 +72,6 @@
       {
         "url": "/rest-datasets/featureservice/:id",
         "method": "POST",
-        "authenticated": true,
         "endpoints": [{
             "method": "POST",
             "baseUrl": "http://localhost:3035",
@@ -71,7 +81,6 @@
       {
         "url": "/rest-datasets/featureservice/:id",
         "method": "DELETE",
-        "authenticated": true,
         "endpoints": [{
             "method": "DELETE",
             "baseUrl": "http://localhost:3035",
