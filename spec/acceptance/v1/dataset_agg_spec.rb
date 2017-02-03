@@ -20,11 +20,11 @@ module V1
       let!(:params_q)   {{"connector": {"dataset": {"data": {
                                       "id": "#{dataset_id}",
                                       "attributes": {"provider": "featureservice",
-                                                                              "format": "JSON",
-                                                                              "name": "Arcgis test api",
-                                                                              "dataPath": "features",
-                                                                              "attributesPath": "fields",
-                                                                              "connectorUrl": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?outFields=District,City&where=1=1&f=json"
+                                      "format": "JSON",
+                                      "name": "Arcgis test api",
+                                      "dataPath": "features",
+                                      "attributesPath": "fields",
+                                      "connectorUrl": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?outFields=District,City&where=1=1&f=json"
                                     }}}}}}
 
       let(:group_attr_1) { URI.encode(Oj.dump([{"onStatisticField":"Free_Lunch","statisticType":"sum","outStatisticFieldName":"Free_Lunch"}])) }
@@ -58,9 +58,9 @@ module V1
 
           expect(status).to eq(200)
           expect(data.size).to                           eq(28)
-          expect(data[0]['attributes']['City']).to       eq('Tully')
-          expect(data[0]['attributes']['Free_Lunch']).to eq(0.21)
-          expect(data[0]['attributes']['Reduced_Lu']).to eq(0.075)
+          expect(data[0]['attributes']['City']).to       eq('Baldwinsville')
+          expect(data[0]['attributes']['Free_Lunch']).to eq(0.69)
+          expect(data[0]['attributes']['Reduced_Lu']).to eq(0.04125)
         end
 
         it 'Allows aggregate Arcgis data by two attributes with order DESC using fs' do

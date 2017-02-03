@@ -28,11 +28,17 @@ module ConnectorService
       url  = URI.decode(connector_url)
 
       headers = {}
-      headers['Accept']       = 'application/json'
-      headers['Content-Type'] = 'application/json'
+      headers['Accept']       = 'application/x-www-form-urlencoded'
+      headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
+      query_url   =  url.split('?')[0]
+      form_params = url.split('?')[1]
+      form_params = CGI::parse(URI.decode(form_params)).symbolize_keys!
+      form_params = flatten_hash(form_params)
+
+      Typhoeus::Config.memoize = true
       hydra    = Typhoeus::Hydra.new max_concurrency: 100
-      @request = Typhoeus::Request.new(URI.escape(url), method: :get, headers: headers, followlocation: true)
+      @request = Typhoeus::Request.new(URI.escape(query_url), method: :post, headers: headers, body: form_params)
 
       @request.on_complete do |response|
         if response.success?
@@ -48,6 +54,12 @@ module ConnectorService
       hydra.queue @request
       hydra.run
       @data
+    end
+
+    def flatten_hash(param, prefix=nil)
+      param.each_pair.reduce({}) do |a, (k, v)|
+        v.is_a?(Hash) ? a.merge(flatten_hash(v, "#{prefix}#{k}.")) : a.merge("#{prefix}#{k}".to_sym => v.first)
+      end
     end
   end
 end

@@ -12,6 +12,7 @@ class QueryParams < Hash
       outStatistics:              params['outStatistics']              || nil,
       statisticType:              params['statisticType']              || nil,
       returnCountOnly:            params['returnCountOnly']            || nil,
+      geostore:                   params['geostore']                   || nil,
       limit:                      params['limit']                      ||= standard_limit(params)
     }
 
