@@ -11,7 +11,7 @@ class ConnectorSerializer < ActiveModel::Serializer
   end
 
   def data
-    object.data(@query_filter)
+    @data.data
   end
 
   def uri
@@ -33,7 +33,7 @@ class ConnectorSerializer < ActiveModel::Serializer
 
   def initialize(object, options)
     super
-    @query_filter = options[:query_filter]
-    @uri          = options[:uri]
+    @uri  = options[:uri]
+    @data = options[:data]
   end
 end

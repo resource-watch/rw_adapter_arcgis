@@ -30,6 +30,8 @@ module RwAdapterArcgis
     config.api_only = true
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
 
+    config.middleware.insert_before(Rack::Sendfile, Rack::Chunked)
+
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
       g.test_framework :rspec,

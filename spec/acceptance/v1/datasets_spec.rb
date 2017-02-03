@@ -17,6 +17,16 @@ module V1
                                                                     "table_name": "Public_Schools_in_Onondaga_County"}
                                 }}}}}
 
+      let!(:params_geostore) {{"connector": {"dataset": {"data": {
+                               "id": "#{dataset_id}",
+                               "attributes": {"provider": "featureservice",
+                                "format": "JSON",
+                                "name": "Arcgis test api",
+                                "attributes_path": "fields",
+                                "connectorUrl": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json",
+                                "table_name": "Public_Schools_in_Onondaga_County"
+                              }}}}}}
+
       context 'Without params' do
         it 'Allows access Arcgis data with default limit 1' do
           post "/query/#{dataset_id}", params: params
@@ -117,20 +127,20 @@ module V1
 
           expect(status).to eq(200)
           expect(data.size).to                           eq(2)
-          expect(data[0]['attributes']['FID']).to        eq(3)
-          expect(data[0]['attributes']['Free_Lunch']).to eq(0.08)
-          expect(data[1]['attributes']['FID']).to        eq(2)
+          expect(data[0]['attributes']['FID']).to        eq(2)
+          expect(data[0]['attributes']['Free_Lunch']).to eq(0.11)
+          expect(data[1]['attributes']['FID']).to        eq(3)
         end
 
         it 'Allows access Arcgis data details for all filters' do
-          post "/query/#{dataset_id}?sql=select * from Public_Schools_in_Onondaga_County where FID >=2 and FID != 4 and Free_Lunch not between 0.05 and 0.08&limit=3", params: params
+          post "/query/#{dataset_id}?sql=select * from Public_Schools_in_Onondaga_County where FID >= 2 and FID != 4 and Free_Lunch not between 0.05 and 0.08&limit=3", params: params
 
           data = json['data']
 
           expect(status).to eq(200)
-          expect(data[0]['attributes']['FID']).to        eq(2)
-          expect(data[0]['attributes']['Free_Lunch']).to eq(0.11)
-          expect(data[1]['attributes']['FID']).to        eq(6)
+          expect(data[0]['attributes']['FID']).to        eq(3)
+          expect(data[0]['attributes']['Free_Lunch']).to eq(0.08)
+          expect(data[1]['attributes']['FID']).to        eq(5)
         end
 
         it 'Allows access Arcgis data details for all filters' do
@@ -139,9 +149,9 @@ module V1
           data = json['data']
 
           expect(status).to eq(200)
-          expect(data.size).to                           eq(2)
-          expect(data[0]['attributes']['FID']).to        eq(3)
-          expect(data[0]['attributes']['Free_Lunch']).to eq(0.08)
+          expect(data.size).to                           eq(1)
+          expect(data[0]['attributes']['FID']).to        eq(2)
+          expect(data[0]['attributes']['Free_Lunch']).to eq(0.11)
         end
 
         it 'Allows access Arcgis data with limit rows' do
@@ -166,6 +176,17 @@ module V1
           expect(status).to eq(200)
           expect(json['fields']).to    eq({"FID"=>{"type"=>"esriFieldTypeInteger"}})
           expect(json['tableName']).to eq('Public_Schools_in_Onondaga_County')
+        end
+      end
+
+      context 'For geostore' do
+        it 'Allows access cartoDB data with geostore option' do
+          post "/query/#{dataset_id}?sql=select * from Public_Schools_in_Onondaga_County limit 1&geostore=aa2ee8febfe23cf94539f0b2b5309b0c", params: params_geostore
+
+          data = json['data']
+
+          expect(status).to eq(200)
+          expect(data).to eq([])
         end
       end
     end

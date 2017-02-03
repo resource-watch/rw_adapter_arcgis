@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 module V1
   class ConnectorsController < ApplicationController
+    before_action :disable_gc,       only:   :show
     before_action :set_connector,    except: :info
     before_action :set_query_filter, except: :info
     before_action :set_uri,          except: :info
-    before_action :set_dataset,      only: [:show, :update, :destroy]
+    before_action :set_dataset,      only:  [:show, :update, :destroy]
+    after_action  :enable_gc,        only:   :show
 
     def show
-      render json: @connector, serializer: ConnectorSerializer, query_filter: @query_filter, root: false, uri: @uri
+      @data = DataStream.new(@connector.data(@query_filter))
+      render json: @connector, serializer: ConnectorSerializer, root: false, uri: @uri, data: @data
     end
 
     def create
@@ -69,8 +72,9 @@ module V1
         @query_filter['groupByFieldsForStatistics'] = params[:groupByFieldsForStatistics] if params[:groupByFieldsForStatistics].present?
         @query_filter['outStatistics']              = params[:outStatistics]              if params[:outStatistics].present?
         @query_filter['statisticType']              = params[:statisticType]              if params[:statisticType].present?
-        # For convert endpoint sql2SQL
+        # For convert endpoint sql2FS
         @query_filter['sql']                        = params[:sql]                        if params[:sql].present?
+        @query_filter['geostore']                   = params[:geostore]                   if params[:geostore].present?
       end
 
       def set_uri
@@ -113,6 +117,16 @@ module V1
             "dataset_url" => "#{URI.parse(uri)}"
           }
         }
+      end
+
+      def disable_gc
+        GC.disable
+      end
+
+      def enable_gc
+        ActiveRecord::Base.connection.close
+        response.stream.close
+        GC.start(full_mark: false, immediate_sweep: false)
       end
   end
 end

@@ -48,9 +48,10 @@ class ArcgisService
       query_path += "statisticType=#{@statisticType}&"                           if @statisticType.present?
       query_path += "returnCountOnly=true&"                                      if @returnCountOnly.present?
       sql_path    = "#{@sql}"                                                    if @sql.present?
+      geostore    = @geostore                                                    if @geostore.present?
 
       filter  = if @sql.present?
-                  QueryService.connect_to_query_service(sql_path)
+                  QueryService.connect_to_query_service(sql_path, geostore)
                 else
                   query_path
                 end
