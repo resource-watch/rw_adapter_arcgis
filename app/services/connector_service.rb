@@ -3,8 +3,11 @@ require 'curb'
 require 'typhoeus'
 require 'uri'
 require 'oj'
+require 'yajl'
 
 module ConnectorService
+  FLUSH_EVERY = 500
+
   class << self
     def connect_to_dataset_service(dataset_id, status)
       status = case status
@@ -24,19 +27,36 @@ module ConnectorService
       @c.perform
     end
 
-    def connect_to_provider(connector_url, data_path)
+    def connect_to_provider(connector_url, data_path=nil, attr_path=nil)
       url  = URI.decode(connector_url)
 
       headers = {}
-      headers['Accept']       = 'application/json'
-      headers['Content-Type'] = 'application/json'
+      headers['Accept']       = 'application/x-www-form-urlencoded'
+      headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
+      query_url   = url.split('?')[0]
+      form_params = url.split('?')[1]
+      form_params = CGI::parse(URI.decode(form_params)).symbolize_keys!
+      form_params = flatten_hash(form_params)
+
+      Typhoeus::Config.memoize = true
       hydra    = Typhoeus::Hydra.new max_concurrency: 100
-      @request = Typhoeus::Request.new(URI.escape(url), method: :get, headers: headers, followlocation: true)
+      @request = Typhoeus::Request.new(URI.escape(query_url), method: :post, headers: headers, body: form_params)
+
+
+      count = form_params[:returnCountOnly].present?
 
       @request.on_complete do |response|
         if response.success?
-          @data = Oj.load(response.body.force_encoding(Encoding::UTF_8))[data_path] || Oj.load(response.body.force_encoding(Encoding::UTF_8))
+          if data_path.present? && count.blank?
+            @data = response_processor(data_path, response)
+          elsif attr_path.present? || count.present?
+            parser = Yajl::Parser.new
+            @data  = parser.parse(response.body)[attr_path] || Oj.load(response.body.force_encoding(Encoding::UTF_8))
+          else
+            parser = Yajl::Parser.new
+            @data  = parser.parse(response.body)
+          end
         elsif response.timed_out?
           @data = 'got a time out'
         elsif response.code.zero?
@@ -48,6 +68,26 @@ module ConnectorService
       hydra.queue @request
       hydra.run
       @data
+    end
+
+    def response_processor(data_path, response)
+      parser = YAJI::Parser.new(response.body)
+      i      = 0
+      Enumerator.new do |set|
+        parser.each("/#{data_path}/") do |obj|
+          set << obj.symbolize_keys!
+          i = i + 1
+          if (i % FLUSH_EVERY).zero?
+            GC.start(full_mark: false, immediate_sweep: false)
+          end
+        end
+      end
+    end
+
+    def flatten_hash(param, prefix=nil)
+      param.each_pair.reduce({}) do |a, (k, v)|
+        v.is_a?(Hash) ? a.merge(flatten_hash(v, "#{prefix}#{k}.")) : a.merge("#{prefix}#{k}".to_sym => v.first)
+      end
     end
   end
 end
