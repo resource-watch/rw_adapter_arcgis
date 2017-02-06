@@ -25,7 +25,7 @@ class RestConnector
   end
 
   def recive_dataset_meta
-    @recive_attributes = ConnectorService.connect_to_provider(@connector_url, @attributes_path)
+    @recive_attributes = ConnectorService.connect_to_provider(@connector_url, nil, @attributes_path)
     @data_horizon      = @data_horizon.present? ? @data_horizon : 0
     if @recive_attributes.to_s.include?('error')
       nil
