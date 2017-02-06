@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 module V1
   class ConnectorsController < ApplicationController
-    before_action :disable_gc,       only:   :show
     before_action :set_connector,    except: :info
     before_action :set_query_filter, except: :info
     before_action :set_uri,          except: :info
     before_action :set_dataset,      only:  [:show, :update, :destroy]
-    after_action  :enable_gc,        only:   :show
+    after_action  :start_gc,        only:   :show
 
     def show
       @data = DataStream.new(@connector.data(@query_filter))
@@ -119,13 +118,7 @@ module V1
         }
       end
 
-      def disable_gc
-        GC.disable
-      end
-
-      def enable_gc
-        ActiveRecord::Base.connection.close
-        response.stream.close
+      def start_gc
         GC.start(full_mark: false, immediate_sweep: false)
       end
   end

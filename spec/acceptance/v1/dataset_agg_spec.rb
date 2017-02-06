@@ -75,13 +75,13 @@ module V1
           expect(data[0]['attributes']['Reduced_Lu']).to eq(0.09)
         end
 
-        it 'Return error message for wrong params' do
+        it 'Return empty data for wrong params' do
           post "/query/#{dataset_id}?sql=select Districtsss,City,sum(Free_Lunch) as Free_Lunch,avg(Reduced_Lus) as Reduced_Lu from Public_Schools_in_Onondaga_County group by District,City order by City ASC", params: params
 
           data = json['data']
 
-          expect(status).to                      eq(200)
-          expect(data['error']['details'][0]).to eq('Unable to perform query. Please check your parameters.')
+          expect(status).to eq(200)
+          expect(data).to eq([])
         end
 
         it 'Select count' do
