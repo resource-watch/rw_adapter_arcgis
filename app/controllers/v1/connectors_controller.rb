@@ -9,6 +9,7 @@ module V1
 
     def show
       @data = DataStream.new(@connector.data(@query_filter))
+      puts "Query data: #{@data}"
       render json: @connector, serializer: ConnectorSerializer, root: false, uri: @uri, data: @data
     end
 
@@ -74,6 +75,9 @@ module V1
         # For convert endpoint sql2FS
         @query_filter['sql']                        = params[:sql]                        if params[:sql].present?
         @query_filter['geostore']                   = params[:geostore]                   if params[:geostore].present?
+
+        puts "Set the query filter"
+        puts @query_filter
       end
 
       def set_uri

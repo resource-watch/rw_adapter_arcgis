@@ -11,7 +11,9 @@ class ArcgisService
 
   def connect_data
     standard_params = '&returnGeometry=false&returnDistinctValues=false&f=json'
-    query_to_run    = if @options_hash.present?
+    query_to_run    = if options_query["errors"].present?
+                        ""
+                      elsif @options_hash.present?
                         query_params = "/query#{options_query}#{standard_params}".gsub('&&','&').gsub('??','?').gsub('queryoutFields', 'query?outFields')
                         query_params = query_params + '&where=1=1' unless query_params.include?('&where')
                         query_params
@@ -20,9 +22,13 @@ class ArcgisService
                       end
 
     url =  URI.encode(@connect_data_url[/[^\?]+/].gsub('/query',''))
+    puts "Base URL: #{url}"
     url += query_to_run
-
-    ConnectorService.connect_to_provider(url, @connect_data_path)
+    puts "Query to run. #{query_to_run}"
+    if not options_query["errors"].present?
+      ConnectorService.connect_to_provider(url, @connect_data_path)
+    else
+    end
   end
 
   private
@@ -57,6 +63,7 @@ class ArcgisService
                 end
 
       filter += Filters::Limit.apply_limit(@limit) if @limit.present? && !@limit.include?('all')
+      puts "Filter: #{filter}"
       filter
     end
 end
