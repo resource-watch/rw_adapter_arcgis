@@ -22,9 +22,9 @@ class ArcgisService
                       end
 
     url =  URI.encode(@connect_data_url[/[^\?]+/].gsub('/query',''))
-    puts "Base URL: #{url}"
+    Rails.logger.info "Base URL: #{url}"
     url += query_to_run
-    puts "Query to run. #{query_to_run}"
+    Rails.logger.info "Query to run. #{query_to_run}"
     if not options_query["errors"].present?
       ConnectorService.connect_to_provider(url, @connect_data_path)
     else
@@ -63,7 +63,7 @@ class ArcgisService
                 end
 
       filter += Filters::Limit.apply_limit(@limit) if @limit.present? && !@limit.include?('all')
-      puts "Filter: #{filter}"
+      Rails.logger.info "Filter: #{filter}"
       filter
     end
 end

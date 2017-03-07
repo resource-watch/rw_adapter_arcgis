@@ -28,17 +28,17 @@ module ConnectorService
     end
 
     def connect_to_provider(connector_url, data_path=nil, attr_path=nil)
-      puts "Connector URL: #{connector_url}"
+      Rails.logger.info "Connector URL: #{connector_url}"
       url  = URI.decode(connector_url)
-      puts "Decoded URL: #{url}"
+      Rails.logger.info "Decoded URL: #{url}"
       headers = {}
       headers['Accept']       = 'application/x-www-form-urlencoded'
       headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
       query_url   = url.split('?')[0]
-      puts "Query URL: #{query_url}"
+      Rails.logger.info "Query URL: #{query_url}"
       form_params = url.split('?')[1]
-      puts "Query params: #{form_params}"
+      Rails.logger.info "Query params: #{form_params}"
       form_params = CGI::parse(URI.decode(form_params)).symbolize_keys!
       form_params = flatten_hash(form_params)
 

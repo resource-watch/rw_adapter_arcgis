@@ -19,8 +19,8 @@ module QueryService
       
       
       @request.on_complete do |response|
-        puts "Response: #{response.options}"
-        puts "Response code: #{response.code}"
+        Rails.logger.info "Response: #{response.options}"
+        Rails.logger.info "Response code: #{response.code}"
         
         if response.success?
           @data = Oj.load(@request.response.body.force_encoding(Encoding::UTF_8))['data']['attributes']['query'] || Oj.load(@request.response.body.force_encoding(Encoding::UTF_8))

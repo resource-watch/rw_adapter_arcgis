@@ -8,8 +8,9 @@ module V1
     after_action  :start_gc,        only:   :show
 
     def show
+      logger.info "Entering query in ConnectorsController#show"
       @data = DataStream.new(@connector.data(@query_filter))
-      puts "Query data: #{@data}"
+      logger.info "Query data: #{@data.to_s}"
       render json: @connector, serializer: ConnectorSerializer, root: false, uri: @uri, data: @data
     end
 
@@ -76,8 +77,8 @@ module V1
         @query_filter['sql']                        = params[:sql]                        if params[:sql].present?
         @query_filter['geostore']                   = params[:geostore]                   if params[:geostore].present?
 
-        puts "Set the query filter"
-        puts @query_filter
+        logger.info "Set the query filter"
+        logger.info @query_filter
       end
 
       def set_uri
