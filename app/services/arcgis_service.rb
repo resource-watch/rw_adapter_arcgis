@@ -56,7 +56,11 @@ class ArcgisService
       sql_path    = "#{@sql}"                                                    if @sql.present?
       geostore    = @geostore                                                    if @geostore.present?
 
-      filter  = if @sql.present?
+      if @sql.present?
+        puts "SQL PATH: "
+        puts sql_path
+      end
+      filter  = if @sql.present?                  
                   QueryService.connect_to_query_service(sql_path, geostore)
                 else
                   query_path
