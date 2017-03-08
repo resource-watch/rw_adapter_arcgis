@@ -8,10 +8,17 @@ module V1
     after_action  :start_gc,        only:   :show
 
     def show
-      logger.info "Entering query in ConnectorsController#show"
-      @data = DataStream.new(@connector.data(@query_filter))
-      logger.info "Query data: #{@data.to_s}"
-      render json: @connector, serializer: ConnectorSerializer, root: false, uri: @uri, data: @data
+      Rails.logger.info "Entering query in ConnectorsController#show"
+      if not @query_filter.empty?
+        @data = DataStream.new(@connector.data(@query_filter))
+        Rails.logger.info "Query data: #{@data.to_s}"
+        render json: @connector, serializer: ConnectorSerializer, root: false, uri: @uri, data: @data
+      else
+        render json: {"errors" => [{
+                                     detail: "sql or fs required",
+                                     status: 400
+                                   }]}
+      end
     end
 
     def create
@@ -77,8 +84,8 @@ module V1
         @query_filter['sql']                        = params[:sql]                        if params[:sql].present?
         @query_filter['geostore']                   = params[:geostore]                   if params[:geostore].present?
 
-        logger.info "Set the query filter"
-        logger.info @query_filter
+        Rails.logger.info "Set the query filter"
+        Rails.logger.info @query_filter
       end
 
       def set_uri
