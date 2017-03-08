@@ -65,15 +65,17 @@ module V1
       Rails.logger.info "RestConnector params: #{params.to_unsafe_h}"
 
       puts "MIRANDO SI LA QUERY ES VALIDA"
-      query = QueryService.connect_to_query_service(params.to_unsafe_h["sql"])
-      puts "RESPONSE: #{query}"
-      puts "Query is a hash: #{query.class == Hash}"
-      if query.class == Hash
-        if query.key? "errors"
-          puts "There are errors in the query"
+      if params.to_unsafe_h.key? "sql"
+        query = QueryService.connect_to_query_service(params.to_unsafe_h["sql"])
+        puts "RESPONSE: #{query}"
+        puts "Query is a hash: #{query.class == Hash}"
+        if query.class == Hash
+          if query.key? "errors"
+            puts "There are errors in the query"
           # @connector = "400 malformed query"
-        else
-          puts "No errors here"
+          else
+            puts "No errors here"
+          end
         end
       else
         @connector = RestConnector.new(params) if params[:dataset].present? || params[:connector].present?
