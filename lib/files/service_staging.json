@@ -4,7 +4,7 @@
     "tags": ["rw"],
     "urls": [
       {
-        "url": "/query/:dataset",
+        "url": "/v1/query/:dataset",
         "method": "GET",
         "paramProvider": "dataset",
         "dataProvider": "dataset",
@@ -23,7 +23,7 @@
         }]
       },
       {
-        "url": "/query/:dataset",
+        "url": "/v1/query/:dataset",
         "method": "POST",
         "paramProvider": "dataset",
         "dataProvider": "dataset",
@@ -42,7 +42,7 @@
         }]
       },
       {
-        "url": "/fields/:dataset",
+        "url": "/v1/fields/:dataset",
         "method": "GET",
         "paramProvider": "dataset",
         "dataProvider": "dataset",
@@ -61,7 +61,7 @@
         }]
       },
       {
-        "url": "/rest-datasets/featureservice",
+        "url": "/v1/rest-datasets/featureservice",
         "method": "POST",
         "endpoints": [{
             "method": "POST",
@@ -70,7 +70,7 @@
         }]
       },
       {
-        "url": "/rest-datasets/featureservice/:id",
+        "url": "/v1/rest-datasets/featureservice/:id",
         "method": "POST",
         "endpoints": [{
             "method": "POST",
@@ -79,7 +79,7 @@
         }]
       },
       {
-        "url": "/rest-datasets/featureservice/:id",
+        "url": "/v1/rest-datasets/featureservice/:id",
         "method": "DELETE",
         "endpoints": [{
             "method": "DELETE",
