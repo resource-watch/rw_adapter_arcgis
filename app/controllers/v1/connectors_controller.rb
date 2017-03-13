@@ -72,10 +72,17 @@ module V1
         if query.class == Hash
           if query.key? "errors"
             puts "There are errors in the query"
+            render json: {"errors" => [{
+                                         detail: "JARL",
+                                         status: 400
+                                       }]}
           # @connector = "400 malformed query"
           else
-            puts "No errors here"
+            puts "No errors here, but this is weird"
+            @connector = RestConnector.new(params) if params[:dataset].present? || params[:connector].present?
           end
+        else
+          @connector = RestConnector.new(params) if params[:dataset].present? || params[:connector].present?
         end
       else
         @connector = RestConnector.new(params) if params[:dataset].present? || params[:connector].present?
