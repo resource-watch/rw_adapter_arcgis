@@ -63,22 +63,16 @@ module V1
 
     def set_connector
       Rails.logger.info "RestConnector params: #{params.to_unsafe_h}"
-
-      puts "MIRANDO SI LA QUERY ES VALIDA"
       if params.to_unsafe_h.key? "sql"
         query = QueryService.connect_to_query_service(params.to_unsafe_h["sql"])
-        puts "RESPONSE: #{query}"
-        puts "Query is a hash: #{query.class == Hash}"
         if query.class == Hash
           if query.key? "errors"
-            puts "There are errors in the query"
             render json: {"errors" => [{
-                                         detail: "JARL",
+                                         detail: "Malformed query",
                                          status: 400
                                        }]}
           # @connector = "400 malformed query"
           else
-            puts "No errors here, but this is weird"
             @connector = RestConnector.new(params) if params[:dataset].present? || params[:connector].present?
           end
         else
