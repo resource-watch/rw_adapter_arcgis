@@ -1,113 +1,92 @@
 {
     "id": "rw_adapter_arcgis_v1",
     "name": "RW Adapter Arcgis v1",
-    "tags": [
-        "rw"
-    ],
+    "tags": ["rw"],
     "urls": [
-        {
-            "url": "/query/:dataset",
-            "method": "GET",
-            "paramProvider": "dataset",
-            "dataProvider": "dataset",
-            "filters": {
-                "data": {
-                    "attributes": {
-                        "provider": "featureservice"
-                    }
-                }
-            },
-            "endpoints": [
-                {
-                    "method": "POST",
-                    "baseUrl": "http://localhost:3035",
-                    "path": "/query/:dataset",
-                    "data": [
-                        "dataset"
-                    ]
-                }
-            ]
+      {
+        "url": "/v1/query/:dataset",
+        "method": "GET",
+        "paramProvider": "dataset",
+        "dataProvider": "dataset",
+        "filters":{
+          "data": {
+              "attributes": {
+                "provider": "featureservice"
+              }
+            }
         },
-        {
-            "url": "/query/:dataset",
+        "endpoints": [{
             "method": "POST",
-            "paramProvider": "dataset",
-            "dataProvider": "dataset",
-            "filters": {
-                "data": {
-                    "attributes": {
-                        "provider": "featureservice"
-                    }
-                }
-            },
-            "endpoints": [
-                {
-                    "method": "POST",
-                    "baseUrl": "http://localhost:3035",
-                    "path": "/query/:dataset",
-                    "data": [
-                        "dataset"
-                    ]
-                }
-            ]
+            "baseUrl": "http://localhost:3035",
+            "path": "/query/:dataset",
+            "data": ["dataset"]
+        }]
+      },
+      {
+        "url": "/v1/query/:dataset",
+        "method": "POST",
+        "paramProvider": "dataset",
+        "dataProvider": "dataset",
+        "filters":{
+          "data": {
+              "attributes": {
+                "provider": "featureservice"
+              }
+            }
         },
-        {
-            "url": "/fields/:dataset",
-            "method": "GET",
-            "paramProvider": "dataset",
-            "dataProvider": "dataset",
-            "filters": {
-                "data": {
-                    "attributes": {
-                        "provider": "featureservice"
-                    }
-                }
-            },
-            "endpoints": [
-                {
-                    "method": "POST",
-                    "baseUrl": "http://localhost:3035",
-                    "path": "/fields/:dataset",
-                    "data": [
-                        "dataset"
-                    ]
-                }
-            ]
-        },
-        {
-            "url": "/rest-datasets/featureservice",
+        "endpoints": [{
             "method": "POST",
-            "endpoints": [
-                {
-                    "method": "POST",
-                    "baseUrl": "http://localhost:3035",
-                    "path": "/datasets"
-                }
-            ]
+            "baseUrl": "http://localhost:3035",
+            "path": "/query/:dataset",
+            "data": ["dataset"]
+        }]
+      },
+      {
+        "url": "/v1/fields/:dataset",
+        "method": "GET",
+        "paramProvider": "dataset",
+        "dataProvider": "dataset",
+        "filters":{
+          "data": {
+              "attributes": {
+                "provider": "featureservice"
+              }
+            }
         },
-        {
-            "url": "/rest-datasets/featureservice/:id",
+        "endpoints": [{
             "method": "POST",
-            "endpoints": [
-                {
-                    "method": "POST",
-                    "baseUrl": "http://localhost:3035",
-                    "path": "/datasets/:id"
-                }
-            ]
-        },
-        {
-            "url": "/rest-datasets/featureservice/:id",
+            "baseUrl": "http://localhost:3035",
+            "path": "/fields/:dataset",
+            "data": ["dataset"]
+        }]
+      },
+      {
+        "url": "/v1/rest-datasets/featureservice",
+        "method": "POST",
+        "endpoints": [{
+            "method": "POST",
+            "baseUrl": "http://localhost:3035",
+            "path": "/datasets"
+        }]
+      },
+      {
+        "url": "/v1/rest-datasets/featureservice/:id",
+        "method": "POST",
+        "endpoints": [{
+            "method": "POST",
+            "baseUrl": "http://localhost:3035",
+            "path": "/datasets/:id"
+        }]
+      },
+      {
+        "url": "/v1/rest-datasets/featureservice/:id",
+        "method": "DELETE",
+        "endpoints": [{
             "method": "DELETE",
-            "endpoints": [
-                {
-                    "method": "DELETE",
-                    "baseUrl": "http://localhost:3035",
-                    "path": "/datasets/:id"
-                }
-            ]
-        }
+            "baseUrl": "http://localhost:3035",
+            "path": "/datasets/:id"
+        }]
+      }
     ],
-    "swagger": {
-    }
+    "swagger": {}
 }
